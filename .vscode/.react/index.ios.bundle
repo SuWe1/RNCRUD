@@ -72715,12 +72715,14 @@ name:this.state.name})}).
 then(function(response){return response.json();}).
 then(function(responseData){
 _this2.setState({msg:responseData.code});
-});
-if(msg=200){
+if(_this2.state.msg==200){
 _reactNative.Alert.alert('添加成功!');
-}else if(msg=1){
+}else if(_this2.state.msg==1){
 _reactNative.Alert.alert('添加失败,已经存在!');
 }
+}).
+done();
+
 }},{key:'render',value:function render()
 {var _this3=this;
 return(
@@ -75494,14 +75496,96 @@ var _reactNative=require(42 /* react-native */);
 var _Button=require(603 /* ./Button */);var _Button2=babelHelpers.interopRequireDefault(_Button);var
 
 TaskListItem=function(_Component){babelHelpers.inherits(TaskListItem,_Component);
-function TaskListItem(){babelHelpers.classCallCheck(this,TaskListItem);return babelHelpers.possibleConstructorReturn(this,(TaskListItem.__proto__||Object.getPrototypeOf(TaskListItem)).call(this));
 
-}babelHelpers.createClass(TaskListItem,[{key:'render',value:function render()
+function TaskListItem(){babelHelpers.classCallCheck(this,TaskListItem);var _this=babelHelpers.possibleConstructorReturn(this,(TaskListItem.__proto__||Object.getPrototypeOf(TaskListItem)).call(this));
 
-{var
+_this.state={
+checked:false,
+no:'',
+name:'',
+msg_delete:'',
+msg_update:''};
+
+_this.commit=_this.commit.bind(_this);
+_this.delete=_this.delete.bind(_this);return _this;
+}babelHelpers.createClass(TaskListItem,[{key:'componentDidMount',value:function componentDidMount()
+
+{
+
+
+
+}},{key:'commit',value:function commit()
+
+
+{var _this2=this;var
+task=this.props.task;
+var number=task.no;
+fetch('http://localhost:3000/users/updateUser',{
+method:'post',
+headers:{
+'Accept':'application/json',
+'Content-Type':'application/json'},
+
+body:JSON.stringify({
+no:number,
+name:this.state.name})}).
+
+
+then(function(response){return response.json();}).
+then(function(responseData){
+_this2.setState({msg_update:responseData.code});
+if(_this2.state.msg_update==200){
+_reactNative.Alert.alert('更改成功!');
+}else if(_this2.state.msg_update==1){
+_reactNative.Alert.alert('更改失败,请重试!');
+}
+console.log(responseData);
+console.log(number);
+});
+
+
+}},{key:'delete',value:function _delete()
+
+{var _this3=this;var
+task=this.props.task;
+var number=task.no;
+fetch('http://localhost:3000/users/deleteUser',{
+method:'post',
+headers:{
+'Accept':'application/json',
+'Content-Type':'application/json'},
+
+body:JSON.stringify({
+no:number})}).
+
+
+then(function(response){return response.json();}).
+then(function(responseData){
+_this3.setState({msg_delete:responseData.code});
+if(_this3.state.msg_delete==200){
+_reactNative.Alert.alert('删除成功!');
+}else if(_this3.state.msg_delete==1){
+_reactNative.Alert.alert('删除失败!');
+}
+console.log(responseData);
+console.log(number);
+}).
+catch(function(err){
+console.log(err);
+});
+
+}},{key:'render',value:function render()
+{var _this4=this;var
 task=this.props.task;
 
-var RightButton=void 0;
+
+
+
+
+
+
+
+
 
 
 
@@ -75510,14 +75594,22 @@ _react2.default.createElement(_reactNative.View,{style:styles.TaskListItem},
 
 _react2.default.createElement(_reactNative.View,{style:styles.TaskListItem_TextContainer},
 _react2.default.createElement(_reactNative.TextInput,{
+editable:false,
+ref:'textinputno',
 style:styles.TaskListItem_Text,
-placeholder:task.no}),
+placeholder:task.no,
+value:task.no,
+onChangeText:function onChangeText(text){return _this4.setState({no:text});}}),
 _react2.default.createElement(_reactNative.TextInput,{
+ref:'textinput',
 style:styles.TaskListItem_Text,
-placeholder:task.name})),
+autoCapitalize:'none',
+placeholder:task.name,
+value:this.state.text,
+onChangeText:function onChangeText(text){return _this4.setState({name:text});}})),
 
-_react2.default.createElement(_Button2.default,{name:'update'}),
-_react2.default.createElement(_Button2.default,{name:'delete'})));
+_react2.default.createElement(_Button2.default,{onPress:this.commit,name:'settings'}),
+_react2.default.createElement(_Button2.default,{onPress:this.delete,name:'delete'})));
 
 
 }}]);return TaskListItem;}(_react.Component);exports.default=TaskListItem;

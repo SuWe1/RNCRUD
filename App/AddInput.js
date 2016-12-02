@@ -28,12 +28,14 @@ export default class AddInput extends Component{
      .then((response) => response.json())
      .then((responseData) => {
          this.setState({ msg : responseData.code});
+          if(this.state.msg==200){
+             Alert.alert('添加成功!');
+         }else if(this.state.msg==1){
+             Alert.alert('添加失败,已经存在!');
+         }
      })
-     if(msg=200){
-         Alert.alert('添加成功!');
-     }else if(msg=1){
-         Alert.alert('添加失败,已经存在!');
-     }
+     .done();
+    
 }
     render(){
         return (
