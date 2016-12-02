@@ -116,7 +116,7 @@ export default class TaskListItem extends Component{
                  value={this.state.text}
                  onChangeText={(text) => this.setState({ name : text})}/>
                </View>
-               <Button onPress={this.commit} name='settings'/>
+               <Button onPress={this.commit} name='cached'/>
                <Button onPress={this.delete} name='delete'/>
             </View>
         );

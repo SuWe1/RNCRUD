@@ -75608,7 +75608,7 @@ placeholder:task.name,
 value:this.state.text,
 onChangeText:function onChangeText(text){return _this4.setState({name:text});}})),
 
-_react2.default.createElement(_Button2.default,{onPress:this.commit,name:'settings'}),
+_react2.default.createElement(_Button2.default,{onPress:this.commit,name:'cached'}),
 _react2.default.createElement(_Button2.default,{onPress:this.delete,name:'delete'})));
 
 
