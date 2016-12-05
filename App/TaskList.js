@@ -28,6 +28,8 @@ export default class TaskList extends Component{
                 tasksLoading : false,
                 isRefreshing : false,
             });
+            console.log(this.state.tasks)
+            console.log(this.state.tasksLoading)
         })
         .catch((err) => {
             console.log(err);
